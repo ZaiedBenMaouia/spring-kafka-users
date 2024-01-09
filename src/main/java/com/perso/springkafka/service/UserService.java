@@ -9,5 +9,7 @@ public interface UserService {
 
     void save(User user);
 
-    List<com.perso.springkafka.entity.User> getUsers(String firstName);
+    List<com.perso.springkafka.entity.User> getUsersByName(String firstName);
+
+    List<User> getAllUsers();
 }

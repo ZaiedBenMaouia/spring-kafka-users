@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DefaultUserService implements UserService {
@@ -27,7 +28,12 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public List<com.perso.springkafka.entity.User> getUsers(String firstName) {
+    public List<com.perso.springkafka.entity.User> getUsersByName(String firstName) {
         return userRepository.getByFirstNameIgnoreCaseOrderByFirstNameAscLastNameAsc(firstName);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll().stream().map(user -> new User(user.getId(), user.getFirstName().toUpperCase(),user.getLastName())).collect(Collectors.toList());
     }
 }

@@ -7,6 +7,7 @@ import com.perso.springkafka.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,10 +39,17 @@ public class UserController {
     }
 
     @GetMapping("/{firstName}")
-    @ResponseStatus
     @Operation(summary = "Create a user", description = "Returns a list of users that matchers the given name")
-    public List<User> getUsers(@PathVariable(name = "firstName") String name) {
-        List<com.perso.springkafka.entity.User> users = userService.getUsers(name);
-        return users.stream().map(user -> new User(user.getId(), user.getFirstName(), user.getLastName())).collect(Collectors.toList());
+    public ResponseEntity<List<User>> getUsersByName(@PathVariable(name = "firstName") String name) {
+        List<com.perso.springkafka.entity.User> users = userService.getUsersByName(name);
+        List<User> response = users.stream().map(user -> new User(user.getId(), user.getFirstName(), user.getLastName())).collect(Collectors.toList());
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("")
+    @Operation(summary = "Create a user", description = "Returns a list of users")
+    public ResponseEntity<List<User>> getUsers() {
+        List<User> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 }

@@ -5,6 +5,7 @@ import com.perso.springkafka.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -21,14 +22,15 @@ public class UserKafkaConsumer {
         this.userService = userService;
     }
 
-    @KafkaListener(topics = "${spring.kafka.topic.name}",
-            concurrency = "${spring.kafka.consumer.level.concurrency:3}")
+    @KafkaListener(topics = "${spring.kafka.topic.name}")
     public void logKafkaMessages(@Payload User user,
                                  @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
                                  @Header(KafkaHeaders.RECEIVED_PARTITION) Integer partition,
-                                 @Header(KafkaHeaders.OFFSET) Long offset) {
-        logger.info("Received a message contains a user information with id {}, from {} topic, " +
-                "{} partition, and {} offset", user.getUuid(), topic, partition, offset);
+                                 @Header(KafkaHeaders.OFFSET) Long offset,
+                                 Acknowledgment acknowledgment) {
+        logger.info("Received a message contains a user information with firstName {}, from {} topic, " +
+                "{} partition, and {} offset", user.getFirstName(), topic, partition, offset);
         userService.save(user);
+        acknowledgment.acknowledge();
     }
 }
