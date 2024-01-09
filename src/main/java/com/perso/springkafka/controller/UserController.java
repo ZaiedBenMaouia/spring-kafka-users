@@ -48,8 +48,8 @@ public class UserController {
 
     @GetMapping("")
     @Operation(summary = "Create a user", description = "Returns a list of users")
-    public ResponseEntity<List<User>> getUsers() {
-        List<User> users = userService.getAllUsers();
+    public ResponseEntity<List<com.perso.springkafka.entity.User>> getUsers() {
+        List<com.perso.springkafka.entity.User> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
 }

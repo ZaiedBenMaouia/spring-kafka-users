@@ -11,5 +11,5 @@ public interface UserService {
 
     List<com.perso.springkafka.entity.User> getUsersByName(String firstName);
 
-    List<User> getAllUsers();
+    List<com.perso.springkafka.entity.User> getAllUsers();
 }

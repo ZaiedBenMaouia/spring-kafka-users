@@ -33,7 +33,7 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll().stream().map(user -> new User(user.getId(), user.getFirstName().toUpperCase(),user.getLastName())).collect(Collectors.toList());
+    public List<com.perso.springkafka.entity.User> getAllUsers() {
+        return userRepository.findAll();
     }
 }
