@@ -20,9 +20,7 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private final UserKafkaProducer kafkaProducer;
-
     private final UserService userService;
-
     private final Faker faker;
 
     public UserController(UserKafkaProducer kafkaProducer, UserService userService) {

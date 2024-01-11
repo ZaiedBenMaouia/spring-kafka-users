@@ -8,13 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class DefaultUserService implements UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultUserService.class);
-
     private final UserRepository userRepository;
 
     public DefaultUserService(UserRepository userRepository) {
